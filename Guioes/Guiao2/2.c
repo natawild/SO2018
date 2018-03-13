@@ -10,8 +10,16 @@ que utilizou para o executar
 */
 
 int main() {
-	puts("Antes do sleep"); 
-	sleep(10);
-	printf(" Meu pid = %d, meu pai: ppid = %d\n", getpid(), getppid());
-	_exit(0); 
+	pid_t pid; 
+	puts("sou o original"); 
+	pid=fork(); 
+	if(pid==0){ /* filho */
+
+	}
+	if( pid == -1){
+		perror ("fork"); 
+		return 1; 
+	}
+	printf("pid = %d, ppid =%d\n", getpid(), getppid());
+	
 }
