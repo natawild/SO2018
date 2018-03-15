@@ -10,18 +10,25 @@ códigos de saída.
 */
 
 int main() {
-int i, fPid, ret;
+int i, status;
+
 for(i = 0; i < 10; i++){
-	fPid = fork();
-	if(fPid == 0){//sou filho 
-		printf("Sou o filho número %i\n",i);
-		_exit(i);
+	pid_t pid = fork();
+	if(pid == 0){//sou filho 
+		printf("Sou o filho número %i\n",i+1);
+		printf("Sou o filho %d com o PID %d, com pai %d\n",i+1,getpid(), getppid());
+		_exit(i+1);
 	}
-	printf("Pai: Criei o filho %d com o PID %d\n",i,fPid);
+}
+
+for(i = 0; i < 10; i++){
+	pid_t pid = wait(&status);
+	if(WIFEXITED(status)){
+		printf("Pai: pid = %d, exit do filho = %d\n",pid, WEXITSTATUS(status));	
+	}
+	else {
+		puts("ui... o filho não terminou com exit"); 
 	}
 
-while((fPid=wait(&ret))!= -1){
-	ret=WEXITSTATUS(ret);
-	printf("O filho com PID %d devolveu-me %d\n",fPid,ret);
-	}
+}		
 }
