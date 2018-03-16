@@ -5,20 +5,25 @@
 #include<stdlib.h>
 
 int main () {
-pid_t filho;
-filho=fork();
-
-
-	if(filho==0) {
-               
+	pid_t filho;
+	filho=fork();
+	if(filho == 0) { /* se sou o filho */    
     	execlp("ls","ls","-l",NULL);
     	perror("Não funcionou");
-    	_exit(1);
- 
-}
+    	_exit(-1);
+	}
 	else {
 		wait (NULL);  //pai espera pelo final da listagem 
-}
+	}
 
-  return 0;
+	/*
+	if(filho == 0) { /* se sou o filho    
+    	execlp("ls","ls","-l",NULL);
+    	perror("Não funcionou");
+    	_exit(-1);
+	}
+	printf("Sou o pai"); 
+
+	*/
+  	return 0;
 }

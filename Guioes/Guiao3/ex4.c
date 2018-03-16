@@ -6,7 +6,7 @@
 
 int main (int argc, char * argv[]) {
 
-	//strncpy(argv[1],"12345",)
+	//strncpy(argv[1],"12345")
 
 	execv("./ex3",&argv[1]);
 	perror("Não funcinou");

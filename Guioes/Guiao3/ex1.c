@@ -5,9 +5,7 @@
 
 int main (int argc, char * argv[]) {
 
-execlp("ls","COISINHO","-l",NULL);
-perror ("Não funcionou");
-
-return 1;
-
+	execlp("ls","COISINHO","-l",NULL);
+	perror ("Não funcionou");
+	return 0;
 }
