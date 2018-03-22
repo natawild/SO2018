@@ -51,8 +51,6 @@ void escreve_conta_palavras(const char * line,int *v,int n,char ** args){
     for(i=0; i < palavra; i++)
         args[i][v[i]] ='\0';
 }
- 
-
 
 //o número de argumentos pode ser no máximo o nr de caracteres 
 //quando aparecer um espaço avanço 

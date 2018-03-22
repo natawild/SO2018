@@ -7,6 +7,7 @@
 
 #define LINHAS 4
 #define COLUNAS 1000000
+#define MAX_NUM 1500000
 
 /*
 Pretende-se determinar a existência de um determinado número inteiro nas linhas de numa matriz de
@@ -20,29 +21,40 @@ argumento, numa matriz gerada aleatoriamente.
 
 int palheiro[LINHAS][COLUNAS]; 
 
-
 int main(int argc, char* argv[]){
-    int i, j, agulha = atoi(argv[1]); 
-    
-    palheiro[0][873453] = palheiro[1][6347] = agulha; 
+    int contaOcorrencias =0; 
+    int status; 
+    int i, j; 
+    int agulha = atoi(argv[1]); 
+    srand(time(NULL));
+    for(i=0; i < LINHAS; i++) {
+        for(j=0; j < COLUNAS; j++){
+          palheiro[i][j] = rand() % MAX_NUM; 
+          //printf("MATRIZ: %d\n", palheiro[i][j]);
+        }
+    }
     
     for(i=0; i < LINHAS; i++) {
         pid_t pid = fork(); 
-        if(pid == 0){
-            for(j=0; j < COLUNAS; j++)
+        if(pid == 0){//se sou filho
+            for(j=0; j < COLUNAS; j++){
                 if(palheiro[i][j] == agulha){
-                    puts("encontrei"); 
-                    break; 
+                    contaOcorrencias++; 
+                    printf("Encontrei o numero %d na linha %d coluna %d \n", agulha, i, j);
+                    exit(contaOcorrencias); 
                 }
+            }
         }
-        _exit(i); 
     }
 
-
-    for( i= 0; i!=LINHAS; i++)
-        wait(NULL); 
+    for(i=0; i<LINHAS; i++){
+        wait(&status);
+        contaOcorrencias += WEXITSTATUS(status);
+        printf("Encontrei %d\n", contaOcorrencias);
+    }
 
 }
+
 
 
 

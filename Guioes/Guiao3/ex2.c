@@ -4,6 +4,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+/*
+Implemente um programa semelhante ao anterior que execute o mesmo comando mas agora no contexto
+de um processo filho.
+*/
+
 int main () {
 	pid_t filho;
 	filho=fork();
