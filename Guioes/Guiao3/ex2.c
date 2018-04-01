@@ -11,9 +11,9 @@ de um processo filho.
 
 int main () {
 	pid_t filho;
-	filho=fork();
+	filho = fork();
 	if(filho == 0) { /* se sou o filho */    
-    	execlp("ls","ls","-l",NULL);
+    	execlp("ls", "ls", "-l", NULL);
     	perror("Não funcionou");
     	_exit(-1);
 	}

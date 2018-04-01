@@ -6,14 +6,13 @@
 #define TAM_STR 50
 #define TAM_STR_MAIN 100
 
-
 /*
 Implemente um interpretador de comandos muito simples ainda que inspirado na bash. O interpretador
 deverá executar comandos especificados numa linha de texto introduzida pelo utilizador. Os comandos
-s˜ao compostos pelo nome do programa a executar e uma eventual lista de argumentos. Os comandos
+são compostos pelo nome do programa a executar e uma eventual lista de argumentos. Os comandos
 podem ainda executar em primeiro plano, ou em pano de fundo, caso o utilizador termine a linha com &.
 O interpretador deverá terminar a sua execução quando o utilizador invocar o comando interno exit ou
-quando assinalar o fim de ficheiro (Control-D no in´ıcio de uma linha em sistemas baseados em Unix).
+quando assinalar o fim de ficheiro (Control-D no início de uma linha em sistemas baseados em Unix).
 */
  
 int conta_palavras(const char * line){
@@ -72,7 +71,6 @@ int mysystem(const char * command){
         }
         args[n] = NULL;
  
- 
         escreve_conta_palavras(command,v,n,args); // preencher os argumentos
  
         execvp(args[0],args); //executar
@@ -90,7 +88,7 @@ int main(){
  
     int n;
  
-    while( (n=read(0,str,100)) >0){
+    while( (n=read(0, str, 100)) > 0){
         str[n-1] = '\0';
         mysystem(str);
     }
