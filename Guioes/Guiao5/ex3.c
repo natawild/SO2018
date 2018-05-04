@@ -28,8 +28,8 @@ int main(){
 
   if(pid == 0) { //se sou o filho 
     close(pd[1]); /* como o filho nao vai precisar de escrever podemos fechar essa opcao */
-    dup2(pd[0],0);
-    close(pd[0]);
+    dup2(pd[0],0);//duplicar 
+    close(pd[0]);//fechar a leitura
     execlp("wc","wc",NULL);           
     perror("execpl");
     return 1;
@@ -42,10 +42,10 @@ int main(){
 
     else {
       close(pd[0]); /*como o pai nao vai ler podemos fechar esta opcao */
-      while((n = read( 0, buffer, sizeof(buffer))) > 0){
+      while((n = read( 0, buffer, sizeof(buffer))) > 0){//consigo ler alguma cois stin
         write(pd[1], buffer, n); //escreve 
       }
-      close(pd[1]);
+      close(pd[1]);//situação de EOF, fechamos a escrita 
 
     }        
   }

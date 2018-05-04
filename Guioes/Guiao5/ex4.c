@@ -16,14 +16,14 @@ int main(){
 
   	if(fork() == 0) { //se sou filho 
   		close(pd[1]); //fcho escrita
-  		dup2(pd[0],0);
+  		dup2(pd[0],0);//ler do canal de leitura do pipe 
   		close(pd[0]);
    		execlp("wc","wc","-l",NULL);
   		perror("wc");
    		return 1;
 	} 
  	close(pd[0]); //fecho leitura 
- 	dup2(pd[1],1);
+ 	dup2(pd[1],1); //duplicar o output 
  	close(pd[1]);
  	execlp("ls","ls","/etc",NULL);
  	perror("ls");

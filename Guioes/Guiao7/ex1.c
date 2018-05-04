@@ -9,9 +9,9 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-int segundos=0;
-int controlcs=0;
-int n= 0;
+int segundos = 0;
+int controlcs = 0;
+int n = 0;
 
 void sec (int s){
 	segundos++; 
@@ -20,11 +20,11 @@ void sec (int s){
 
 void f(int signal) {
 	switch(signal) {
-		case SIGINT: //caso clique em control c : INTR
+		case SIGINT: //caso clique em control c : INTR -- interrupção
 			controlcs++;
 			printf("Tempo em segundos:  %d\n",segundos );
 			break;
-		case SIGQUIT: //caso clique em control \ : QUIT
+		case SIGQUIT: //caso clique em control \ : QUIT -- sair 
 			printf("Numero de control ^c = %d\n",controlcs );
 			_exit(0);
 			break;

@@ -10,14 +10,15 @@
 
 
 int main(int argc, char const *argv[]){
-   
-   int ficheiro =open("fifo",O_RDONLY);
-   int n;
+   puts("antes"); 
+   int ficheiro =open("fifo",O_RDONLY), n;
+   puts("depois"); 
    char l[1024];
 
    while(n=read(ficheiro,l,sizeof(l+1))){
         write(1,l,n);
    }
+   close(ficheiro); 
 
 	return 0;
 }

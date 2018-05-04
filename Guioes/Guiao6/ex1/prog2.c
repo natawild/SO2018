@@ -9,7 +9,9 @@
 
 
 int main(int argc, char const *argv[]){
+	puts("Antes"); 
 	int ficheiro = open("fifo",O_WRONLY);
+	puts("depois"); 
  	char linha[1024];
     int n;
 
@@ -17,6 +19,7 @@ int main(int argc, char const *argv[]){
 
 			write(ficheiro,linha,n); //escrevo 
      }
+     close(ficheiro); 
 
 	return 0;
 }

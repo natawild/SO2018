@@ -48,7 +48,6 @@ int main(int argc, char  *argv[]){
 				close(pid2[1]);
 				close(pid1[0]);
 				close(pid1[1]);
-	
 				execlp("grep","grep","-v","^#","/etc/passwd",NULL);
 				//execlp("cat","cat",NULL);
 				perror("grep");
@@ -68,8 +67,7 @@ int main(int argc, char  *argv[]){
 				execlp("cut","cut","-f7","-d:",NULL);
 				//execlp("cat","cat",NULL);
 				perror("cut");
-				return 1;
-				
+				return 1;	
 			}
 		}
 		else {
@@ -83,8 +81,7 @@ int main(int argc, char  *argv[]){
        			//execlp("cat","cat",NULL);
 
        			perror("uniq");		
-       			return 1;
-			
+       			return 1;	
 		} 
  	}
   	else {

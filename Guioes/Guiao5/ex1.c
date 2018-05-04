@@ -14,7 +14,7 @@ int main(){
 	pipe(pfds); 
 
 	if(!fork()){
-		close(pfds[1]);
+		close(pfds[1]);//fechar a escrita 
 		n = read(pfds[0], buffer, sizeof(buffer));
 		/*
 		printf("FILHO a ler\n");
@@ -28,7 +28,7 @@ int main(){
 	} 
 	else{
 		sleep(6);
-		close(pfds[0]); 
+		close(pfds[0]); //fechar a leitura 
 		//getchar(); 
 		printf("Pai a escrever\n");
 		write(pfds[1], "linha de teste muito comprida a ver que disparates vão acontecer se funciona ou não\n", 200);
