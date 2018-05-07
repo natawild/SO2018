@@ -1,0 +1,15 @@
+Este comando lista os ficheiros:
+$ ls
+>>>
+aux
+enunciado-so-2017-18.pdf
+Makefile
+notebook
+output
+processnb
+<<<
+Agora podemos ordenar estes ficheiros:
+$| sort
+ sortE escolher o primeiro:
+$| head -1
+ head
