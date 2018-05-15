@@ -11,7 +11,7 @@
 
 int main(int argc, char const *argv[]){
    puts("antes"); 
-   int ficheiro = open("fifo",O_RDONLY), n;
+   int ficheiro = open("fifo",O_RDONLY), n;//le
    puts("depois"); 
    char l[1024];
 
