@@ -1,5 +1,5 @@
 Este comando lista os ficheiros:
-$ ls -l | wc
+$ ls
 Agora podemos ordenar estes ficheiros:
 $| sort
 E escolher o primeiro:
