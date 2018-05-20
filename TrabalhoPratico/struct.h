@@ -20,7 +20,13 @@ char *getComandoDescricao(Notebook n, int i);
 
 char *getComandoNome(Notebook n, int i);
 
+char **getComandoTeste(Notebook n, int i);
+
 int getComandoDepends(Notebook n, int i);
+
+void setComandoDescricao(Notebook n, char *descricao, int i);
+
+void setComandoNome(Notebook n, char *nome, int i);
 
 #endif 
 

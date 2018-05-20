@@ -1,11 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "struct.h"
+
 
 struct comando{
    char  *descricao; //descrição do comando
    char  *nome; //comando
+   char **teste;
    int depends;
    //char *output; //output do comando
 }; 
@@ -18,10 +21,17 @@ struct notebook{
 	Comando *arrayCmd;
 };
 
+
+
 Comando initComando(){
+	int i;
 	Comando c = malloc(sizeof(struct notebook));
 	c -> descricao = (char *) malloc(512 * sizeof(char));
 	c -> nome = (char *) malloc(512 * sizeof(char));
+	c -> teste = (char **) malloc(512 * sizeof(char*));
+	for (i=0; i<512; i++){
+    	(c->teste)[i] = (char*) malloc( 512 * sizeof(char));
+	}
 	c -> depends = 0;
 	return c;
 }
@@ -35,6 +45,7 @@ Notebook initNotebook(int size){
 }
 
 int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
+	int i=0;
 	if (n->used == n->size){
 		n->arrayCmd = realloc(n->arrayCmd, 2*(n->size)*sizeof(struct comando));
 		n->size =(n->size)*2;
@@ -44,6 +55,21 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 	n->arrayCmd[n->used] = cmd;
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
+	n->arrayCmd[n->used]->teste[i] = strtok(nome," $|");
+	
+	while((n->arrayCmd[n->used]->teste[i])!=NULL){
+   		n->arrayCmd[n->used]->teste[++i] = strtok(NULL," $|");
+   	}
+   	
+
+   	i=0;
+   /*	while((n->arrayCmd[n->used]->teste[i])!=NULL){
+   		printf("%s\n", n->arrayCmd[n->used]->teste[i++]);
+   		printf("%d\n",i);
+   	}*/
+
+	//execvp(n->arrayCmd[n->used]->teste[1], &(n->arrayCmd[n->used]->teste[1]));
+
 	n->arrayCmd[n->used]->depends = 0;
 	(n->used)++;
 	return 0;	
@@ -55,7 +81,7 @@ int printNotebook(Notebook n){
 		printf("size: %d\n", n->size);
 		printf("used: %d\n", n->used);
 		printf("descricao: %s\n", n->arrayCmd[i]->descricao);
-		printf("descricao: %s\n", n->arrayCmd[i]->nome);
+		printf("nome: %s\n", n->arrayCmd[i]->nome);
 		printf("dependencias: %d\n", n->arrayCmd[i]->depends);
 		printf("------------\n");
 	}
@@ -85,7 +111,29 @@ char *getComandoNome(Notebook n, int i){
 	return nome;
 }
 
+char **getComandoTeste(Notebook n, int i){
+ 	char **teste = malloc(512 * sizeof(char));
+ 	int j;
+ 	for (j=0; j<512; j++){
+    	teste[j] = (char*) malloc( 512 * sizeof(char));
+	} 
+ 	for(j=0; (n->arrayCmd[i]->teste[j])!=NULL; j++)
+ 		strcpy(teste[j], n->arrayCmd[i]->teste[j]);
+ 	
+ 	teste[j]=NULL;
+ 	
+	return teste;
+}
+
 int getComandoDepends(Notebook n, int i){
  	int depends = n->arrayCmd[i]->depends; 
 	return depends;
+}
+
+void setComandoDescricao(Notebook n, char *descricao, int i){
+ 	strcpy(n->arrayCmd[i]->descricao, descricao);
+}
+
+void setComandoNome(Notebook n, char *nome, int i){
+ 	strcpy(n->arrayCmd[i]->nome, nome);
 }

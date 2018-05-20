@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-I.
-DEPS = parser.h struct.h 
-OBJ = main.o parser.o struct.o 
+DEPS = parser.h struct.h readl.h 
+OBJ = main.o parser.o struct.o readl.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

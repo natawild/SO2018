@@ -13,9 +13,9 @@ int main(int argc, char *argv[]){
 	int res = insereNotebook(n,desc,nome,0);
 	*/
 
-	/*para ver o conteudo da estrutura
-	printNotebook(n);
-	*/
+	/*para ver o conteudo da estrutura*/
+	//printNotebook(n);
+	
 	
 	/*
 	printf("struct %s\n", getComandoDescricao(n, 0));
