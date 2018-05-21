@@ -60,10 +60,10 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
-	strcpy(n->arrayCmd[n->used]->args[i], strtok(nome," $|"));
+	strtok(nome," $|");
 	while( (aux = strtok(NULL," $|")) != NULL)
-		strcpy(n->arrayCmd[n->used]->args[++i], aux);
-	n->arrayCmd[n->used]->args[++i] = NULL;	
+		strcpy(n->arrayCmd[n->used]->args[i++], aux);
+	n->arrayCmd[n->used]->args[i] = NULL;
 	/*
 	i=0;
    	while((n->arrayCmd[n->used]->args[i])!=NULL){
@@ -160,6 +160,14 @@ void setComandoDescricao(Notebook n, char *descricao, int cmdPos){
 void setComandoNome(Notebook n, char *nome, int cmdPos){
  	strcpy(n->arrayCmd[cmdPos]->nome, nome);
 }
+
+/*
+void setComandoArgs(Notebook n, char *args, int cmdPos, int argsNr){
+	if(args==NULL) 
+		n->arrayCmd[cmdPos]->args[argsNr]=NULL;
+	else 
+		strcpy(n->arrayCmd[cmdPos]->args[argsNr], args);
+}*/
 
 void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
 	if(output==NULL) 
