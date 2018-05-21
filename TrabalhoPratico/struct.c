@@ -60,7 +60,7 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
-	strtok(nome," $|");
+	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $|"));
 	while( (aux = strtok(NULL," $|")) != NULL)
 		strcpy(n->arrayCmd[n->used]->args[i++], aux);
 	n->arrayCmd[n->used]->args[i] = NULL;
@@ -83,10 +83,11 @@ int printNotebook(Notebook n){
 		printf("used: %d\n", n->used);
 		printf("descricao: %s\n", n->arrayCmd[i]->descricao);
 		printf("nome: %s\n", n->arrayCmd[i]->nome);
+		printf("args:  ");
 		for(j=0; (n->arrayCmd[i]->args[j])!=NULL; j++)
 			printf("[%d] %s -- ", j, n->arrayCmd[i]->args[j]);
-		
 		printf("\n");
+		printf("outputs:  ");
 		for(j=0; n->arrayCmd[i]->output[j]!=NULL; j++)
 			printf("[%d] %s -- ", j, n->arrayCmd[i]->output[j]);
 		printf("\n");
@@ -161,13 +162,12 @@ void setComandoNome(Notebook n, char *nome, int cmdPos){
  	strcpy(n->arrayCmd[cmdPos]->nome, nome);
 }
 
-/*
 void setComandoArgs(Notebook n, char *args, int cmdPos, int argsNr){
 	if(args==NULL) 
 		n->arrayCmd[cmdPos]->args[argsNr]=NULL;
 	else 
 		strcpy(n->arrayCmd[cmdPos]->args[argsNr], args);
-}*/
+}
 
 void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
 	if(output==NULL) 
