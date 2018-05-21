@@ -1,0 +1,47 @@
+Este comando lista os ficheiros:
+$ ls
+>>>
+total 104
+-rw-rw-r-- 1 rrpereira rrpereira   969 mai 21 19:15 main.c
+-rw-r--r-- 1 rrpereira rrpereira  3024 mai 21 19:15 main.o
+-rw-rw-r-- 1 rrpereira rrpereira   211 mai 21 01:10 Makefile
+-rw-rw-r-- 1 rrpereira rrpereira   433 mai 21 21:05 notebook.nb
+-rw-rw-r-- 1 rrpereira rrpereira  4717 mai 21 21:07 parser.c
+-rw-rw-r-- 1 rrpereira rrpereira   175 mai 21 05:02 parser.h
+-rw-r--r-- 1 rrpereira rrpereira  6808 mai 21 21:07 parser.o
+-rwxr-xr-x 1 rrpereira rrpereira 18312 mai 21 21:07 processanb
+-rwxr-xr-x 1 rrpereira rrpereira  8456 mai 21 01:10 readl
+-rw-rw-r-- 1 rrpereira rrpereira  1011 mai 21 05:03 readl.c
+-rw-rw-r-- 1 rrpereira rrpereira   158 mai 21 05:02 readl.h
+-rw-r--r-- 1 rrpereira rrpereira  1696 mai 21 15:40 readl.o
+drwxrwxr-x 3 rrpereira rrpereira  4096 mai 21 01:10 Relatorio
+-rw-rw-r-- 1 rrpereira rrpereira  4792 mai 21 05:02 struct.c
+-rw-rw-r-- 1 rrpereira rrpereira   802 mai 21 05:02 struct.h
+-rw-r--r-- 1 rrpereira rrpereira  7080 mai 21 15:40 struct.o
+<<<
+Agora podemos ordenar estes ficheiros:
+$| sort
+>>>
+drwxrwxr-x 3 rrpereira rrpereira  4096 mai 21 01:10 Relatorio
+-rw-r--r-- 1 rrpereira rrpereira  1696 mai 21 15:40 readl.o
+-rw-r--r-- 1 rrpereira rrpereira  3024 mai 21 19:15 main.o
+-rw-r--r-- 1 rrpereira rrpereira  6808 mai 21 21:07 parser.o
+-rw-r--r-- 1 rrpereira rrpereira  7080 mai 21 15:40 struct.o
+-rw-rw-r-- 1 rrpereira rrpereira  1011 mai 21 05:03 readl.c
+-rw-rw-r-- 1 rrpereira rrpereira   158 mai 21 05:02 readl.h
+-rw-rw-r-- 1 rrpereira rrpereira   175 mai 21 05:02 parser.h
+-rw-rw-r-- 1 rrpereira rrpereira   211 mai 21 01:10 Makefile
+-rw-rw-r-- 1 rrpereira rrpereira   433 mai 21 21:05 notebook.nb
+-rw-rw-r-- 1 rrpereira rrpereira  4717 mai 21 21:07 parser.c
+-rw-rw-r-- 1 rrpereira rrpereira  4792 mai 21 05:02 struct.c
+-rw-rw-r-- 1 rrpereira rrpereira   802 mai 21 05:02 struct.h
+-rw-rw-r-- 1 rrpereira rrpereira   969 mai 21 19:15 main.c
+-rwxr-xr-x 1 rrpereira rrpereira 18312 mai 21 21:07 processanb
+-rwxr-xr-x 1 rrpereira rrpereira  8456 mai 21 01:10 readl
+total 104
+<<<
+E escolher o primeiro:
+$| head -1
+>>>
+drwxrwxr-x 3 rrpereira rrpereira  4096 mai 21 01:10 Relatorio
+<<<
