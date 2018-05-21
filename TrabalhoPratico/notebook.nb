@@ -1,6 +1,6 @@
 Este comando lista os ficheiros:
-$ wc readl.c notebook.nb
+$ ls
 Agora podemos ordenar estes ficheiros:
 $| sort
 E escolher o primeiro:
-$2| head -1
+$| head -1

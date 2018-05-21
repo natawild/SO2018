@@ -4,39 +4,6 @@
 #include <stdio.h> 
 #include "readl.h"
  
-//ssize_t read(int fildes, void *buf, size_t nbyte);
-//ssize_t write(int fildes, const void *buf, size_t maybe);
-//int close(int fildes);
- 
-/* 
-ssize_t readln(int fildes, void *buf, size_t nbyte){
-    ssize_t num = 0;
-    char c = *((char *) buf);
-    while( c != '\n' && num<nbyte){
-        num += read(fildes,buf+num,1);
-        c = *((char *) buf + num-1);
-    }
-    *((char *) buf+num) = '\0';
-    return num;
-}*/
-
-/*
-ssize_t readln(int fildes, char *buf, size_t nbyte){
-    int i=0;
-
-    while(i<nbyte-1 &&
-         read(fildes, buf+i,1)>0 &&
-         buf[i] != '\n'){
-         i++;
-    }
-    if(i>=nbyte)
-           buf[i] = 0;
-    else
-           buf[i+1] = 0;
-
-    return i;
-} */
-
 ssize_t readln(int fildes, void *buf, size_t nbyte) {
 
 	size_t i = 0;
@@ -71,14 +38,3 @@ ssize_t readln(int fildes, void *buf, size_t nbyte) {
 		return (-1);
 	return i;
 }
-
-/*
-int main(int argc, char *argv[]){
-	char buf[1024];
-	int n;
-	int f = open(argv[1], O_RDONLY);
-	while ((n = readln(f, buf, 1024))>0){
-		printf("%s\n",buf);
-	}
-	return 0;
-}*/
