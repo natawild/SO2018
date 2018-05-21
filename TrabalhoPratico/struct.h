@@ -16,17 +16,22 @@ int getNotebookSize(Notebook n);
 
 int getNotebookUsed(Notebook n);
 
-char *getComandoDescricao(Notebook n, int i);
+char *getComandoDescricao(Notebook n, int cmdPos);
 
-char *getComandoNome(Notebook n, int i);
+char *getComandoNome(Notebook n, int cmdPos);
 
-char **getComandoTeste(Notebook n, int i);
+char **getComandoArgs(Notebook n, int cmdPos);
 
-int getComandoDepends(Notebook n, int i);
+char **getComandoOutput(Notebook n, int cmdPos);
 
-void setComandoDescricao(Notebook n, char *descricao, int i);
+int getComandoDepends(Notebook n, int cmdPos);
 
-void setComandoNome(Notebook n, char *nome, int i);
+void setComandoDescricao(Notebook n, char *descricao, int cmdPos);
+
+void setComandoNome(Notebook n, char *nome, int cmdPos);
+
+void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr);
+
 
 #endif 
 

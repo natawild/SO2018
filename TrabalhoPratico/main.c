@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 	*/
 
 	/*para ver o conteudo da estrutura*/
-	//printNotebook(n);
+	printNotebook(n);
 	
 	
 	/*

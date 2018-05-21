@@ -6,11 +6,11 @@
 
 
 struct comando{
-   char  *descricao; //descrição do comando
-   char  *nome; //comando
-   char **teste;
-   int depends;
-   //char *output; //output do comando
+   char  *descricao; //linha do notebook com a descrição do comando
+   char  *nome; //linha do notebook que tem o nome do comando
+   char **args; //array de strings, onde cada uma é um argumento do comando
+   char **output; //array de strings, onde cada uma é um output do comando
+   int depends; //depends é o nº de comando do qual deve retirar o output, contado desde o comando atual para trás
 }; 
 
 /*array de apontadores para uma estrutura em que
@@ -18,19 +18,21 @@ cada posição terá uma estrutura comando*/
 struct notebook{
 	int size; //tamanho do array
 	int used; //quantas posições do array estão usadas
-	Comando *arrayCmd;
+	Comando *arrayCmd; //array de apontadores para structs do tipo Comando
 };
-
-
 
 Comando initComando(){
 	int i;
-	Comando c = malloc(sizeof(struct notebook));
+	Comando c = malloc(sizeof(struct comando));
 	c -> descricao = (char *) malloc(512 * sizeof(char));
 	c -> nome = (char *) malloc(512 * sizeof(char));
-	c -> teste = (char **) malloc(512 * sizeof(char*));
+	c -> args = (char **) malloc(512 * sizeof(char*));
 	for (i=0; i<512; i++){
-    	(c->teste)[i] = (char*) malloc( 512 * sizeof(char));
+    	(c->args)[i] = (char*) malloc( 512 * sizeof(char));
+	}
+	c -> output = (char **) malloc(512 * sizeof(char*));
+	for (i=0; i<512; i++){
+    	(c->output)[i] = (char*) malloc( 512 * sizeof(char));
 	}
 	c -> depends = 0;
 	return c;
@@ -46,42 +48,48 @@ Notebook initNotebook(int size){
 
 int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 	int i=0;
+	char *aux = NULL;
 	if (n->used == n->size){
 		n->arrayCmd = realloc(n->arrayCmd, 2*(n->size)*sizeof(struct comando));
 		n->size =(n->size)*2;
 	}
 
 	Comando cmd = initComando();
+	
 	n->arrayCmd[n->used] = cmd;
+
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
-	n->arrayCmd[n->used]->teste[i] = strtok(nome," $|");
-	
-	while((n->arrayCmd[n->used]->teste[i])!=NULL){
-   		n->arrayCmd[n->used]->teste[++i] = strtok(NULL," $|");
-   	}
-   	
-
-   	i=0;
-   /*	while((n->arrayCmd[n->used]->teste[i])!=NULL){
-   		printf("%s\n", n->arrayCmd[n->used]->teste[i++]);
+	strcpy(n->arrayCmd[n->used]->args[i], strtok(nome," $|"));
+	while( (aux = strtok(NULL," $|")) != NULL)
+		strcpy(n->arrayCmd[n->used]->args[++i], aux);
+	n->arrayCmd[n->used]->args[++i] = NULL;	
+	/*
+	i=0;
+   	while((n->arrayCmd[n->used]->args[i])!=NULL){
+   		printf("%s\n", n->arrayCmd[n->used]->args[i++]);
    		printf("%d\n",i);
    	}*/
-
-	//execvp(n->arrayCmd[n->used]->teste[1], &(n->arrayCmd[n->used]->teste[1]));
-
-	n->arrayCmd[n->used]->depends = 0;
+   	
+	n->arrayCmd[n->used]->depends = depends;
 	(n->used)++;
 	return 0;	
 }
 
 int printNotebook(Notebook n){
-	int i;
+	int i, j;
 	for(i=0; i < (n->used); i++){
 		printf("size: %d\n", n->size);
 		printf("used: %d\n", n->used);
 		printf("descricao: %s\n", n->arrayCmd[i]->descricao);
 		printf("nome: %s\n", n->arrayCmd[i]->nome);
+		for(j=0; (n->arrayCmd[i]->args[j])!=NULL; j++)
+			printf("[%d] %s -- ", j, n->arrayCmd[i]->args[j]);
+		
+		printf("\n");
+		for(j=0; n->arrayCmd[i]->output[j]!=NULL; j++)
+			printf("[%d] %s -- ", j, n->arrayCmd[i]->output[j]);
+		printf("\n");
 		printf("dependencias: %d\n", n->arrayCmd[i]->depends);
 		printf("------------\n");
 	}
@@ -99,41 +107,65 @@ int getNotebookUsed(Notebook n){
 	return used;
 }
 
-char *getComandoDescricao(Notebook n, int i){
+char *getComandoDescricao(Notebook n, int cmdPos){
  	char * descricao = malloc(512 * sizeof(char));
- 	strcpy(descricao, n->arrayCmd[i]->descricao);
+ 	strcpy(descricao, n->arrayCmd[cmdPos]->descricao);
 	return descricao;
 }
 
-char *getComandoNome(Notebook n, int i){
+char *getComandoNome(Notebook n, int cmdPos){
  	char * nome = malloc(512 * sizeof(char));; 
- 	strcpy(nome, n->arrayCmd[i]->nome);
+ 	strcpy(nome, n->arrayCmd[cmdPos]->nome);
 	return nome;
 }
 
-char **getComandoTeste(Notebook n, int i){
- 	char **teste = malloc(512 * sizeof(char));
+char **getComandoArgs(Notebook n, int cmdPos){
+ 	char **args = malloc(512 * sizeof(char));
  	int j;
  	for (j=0; j<512; j++){
-    	teste[j] = (char*) malloc( 512 * sizeof(char));
+    	args[j] = (char*) malloc( 512 * sizeof(char));
 	} 
- 	for(j=0; (n->arrayCmd[i]->teste[j])!=NULL; j++)
- 		strcpy(teste[j], n->arrayCmd[i]->teste[j]);
+ 	for(j=0; (n->arrayCmd[cmdPos]->args[j])!=NULL; j++){
+ 		strcpy(args[j], n->arrayCmd[cmdPos]->args[j]);
+ 	}
+
+ 	args[j]=NULL;
  	
- 	teste[j]=NULL;
- 	
-	return teste;
+	return args;
 }
 
-int getComandoDepends(Notebook n, int i){
- 	int depends = n->arrayCmd[i]->depends; 
+char **getComandoOutput(Notebook n, int cmdPos){
+ 	char **output = malloc(512 * sizeof(char));
+ 	int j;
+ 	for (j=0; j<512; j++){
+    	output[j] = (char*) malloc( 512 * sizeof(char));
+	} 
+ 	for(j=0; (n->arrayCmd[cmdPos]->output[j])!=NULL; j++)
+ 		strcpy(output[j], n->arrayCmd[cmdPos]->output[j]);
+ 	
+ 	output[j]=NULL;
+ 	
+	return output;
+}
+
+int getComandoDepends(Notebook n, int cmdPos){
+ 	int depends = n->arrayCmd[cmdPos]->depends; 
 	return depends;
 }
 
-void setComandoDescricao(Notebook n, char *descricao, int i){
- 	strcpy(n->arrayCmd[i]->descricao, descricao);
+void setComandoDescricao(Notebook n, char *descricao, int cmdPos){
+ 	strcpy(n->arrayCmd[cmdPos]->descricao, descricao);
 }
 
-void setComandoNome(Notebook n, char *nome, int i){
- 	strcpy(n->arrayCmd[i]->nome, nome);
+void setComandoNome(Notebook n, char *nome, int cmdPos){
+ 	strcpy(n->arrayCmd[cmdPos]->nome, nome);
 }
+
+void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
+	if(output==NULL) 
+		n->arrayCmd[cmdPos]->output[outputNr]=NULL;
+	else 
+		strcpy(n->arrayCmd[cmdPos]->output[outputNr], output);
+	
+}
+
