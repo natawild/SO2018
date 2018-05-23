@@ -60,17 +60,10 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
-	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $|"));
+	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $|"));//se o nome tiver uma dependencia a posição 0 terá o comando, se tiver mais que uma a posicao 0 terá o nr de dependencias 
 	while( (aux = strtok(NULL," $|")) != NULL)
 		strcpy(n->arrayCmd[n->used]->args[i++], aux);
-	n->arrayCmd[n->used]->args[i] = NULL;
-	/*
-	i=0;
-   	while((n->arrayCmd[n->used]->args[i])!=NULL){
-   		printf("%s\n", n->arrayCmd[n->used]->args[i++]);
-   		printf("%d\n",i);
-   	}*/
-   	
+	n->arrayCmd[n->used]->args[i] = NULL;   	
 	n->arrayCmd[n->used]->depends = depends;
 	(n->used)++;
 	return 0;	

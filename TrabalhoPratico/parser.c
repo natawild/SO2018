@@ -104,8 +104,8 @@ Notebook parser(Notebook n, char *argv){
 
 				if(depends==0){
 					execvp(getComandoArgs(n, i)[0], &getComandoArgs(n, i)[0]);
-					write(2, "Um comando não pode ser executado.\n", 36);
-					kill(getppid(), SIGKILL);
+					write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
+					kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
 					_exit(-1);
 				}
 			
@@ -128,37 +128,31 @@ Notebook parser(Notebook n, char *argv){
 					char buf[1024];
 					int r;
 					dup2(pda[0], 0);
-					/*while((r=read(0, buf, 1024))>0){
-						printf("%s\n", buf);
-					}*/
 					close(pda[0]);
+
 					if(depends==1){
 						execvp(getComandoArgs(n, i)[0], &getComandoArgs(n, i)[0]);
-						write(2, "Um comando não pode ser executado.\n", 36);
-						kill(getppid(), SIGKILL);
+						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
+						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
 						_exit(-1);
 					}
 					else{
 						execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
-						write(2, "Um comando não pode ser executado.\n", 36);
-						kill(getppid(), SIGKILL);
+						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
+						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
 						_exit(-1);
 					}
 				}
 
-				_exit(0);
+				_exit(-1);
 			}
-			wait(NULL);
+
 			close(pd[1]); // ... pois o pai só irá ler do pipe
 			//neste while lemos uma linha do pipe em cada iteraçao
 			j=0;
-			while(readln(pd[0], output, 1024)>0){
-				//if(NULL!=strstr(output, "command") && 
-					//NULL!=strstr(output, "not") && 
-					//NULL!=strstr(output, "found"))
-					//_exit(-1);
+			while(readln(pd[0], output, 1024)>0)
 				setComandoOutput(n, output, i, j++); //coloca a linha lida no array output 
-			}
+
 			setComandoOutput(n, (char *)NULL, i, j);//colocamos a ultima posição deste array a NULL
 			close(pd[0]); //... pois já nao precisamos dele
 		}		
