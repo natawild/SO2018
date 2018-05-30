@@ -14,11 +14,13 @@ int main(int argc, char *argv[]){
 	//função que analisa e distribui o ficheiro pela estrutura
 	parser(n, argv[1]);
 
-	//função que imprime o conteudo da estrutura
+	//função que imprime o conteudo da estrutura para bash
 	printNotebook(n);
 	
 	//parte da função que imprime a estrutura no ficheiro original
 	fnb = open(argv[1], O_RDONLY | O_RDWR | O_TRUNC, 0666);
+
+	//imprime para o ficheiro notebook	
 	for(i=0; i<(getNotebookUsed(n)); i++){
 		write(fnb, getComandoDescricao(n,i), strlen(getComandoDescricao(n,i)));
 		write(fnb, "\n", 1);

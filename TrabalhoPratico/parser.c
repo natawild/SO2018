@@ -92,7 +92,7 @@ Notebook parser(Notebook n, char *argv){
 			_exit(-1);
 		}	
 
-		if(containsPipes(nome) == 0){//Se não existem | no input entre argumentos
+		if(containsPipes(nome) == 0){ //Se não existem | no input entre argumentos
 
 			insereNotebook(n, descricao, nome, depends); //insere no notebook n, o nome, a descricao lidos e a dependencia
 			pipe(pd); //criamos um pipe para passar informacao do pai para o filho
@@ -130,18 +130,18 @@ Notebook parser(Notebook n, char *argv){
 					dup2(pda[0], 0);
 					close(pda[0]);
 
-					if(depends==1){
+					/*if(depends==1){
 						execvp(getComandoArgs(n, i)[0], &getComandoArgs(n, i)[0]);
 						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
 						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
 						_exit(-1);
-					}
-					else{
+					}*/
+					
 						execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
 						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
 						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
 						_exit(-1);
-					}
+					
 				}
 
 				_exit(-1);
@@ -150,8 +150,11 @@ Notebook parser(Notebook n, char *argv){
 			close(pd[1]); // ... pois o pai só irá ler do pipe
 			//neste while lemos uma linha do pipe em cada iteraçao
 			j=0;
-			while(readln(pd[0], output, 1024)>0)
+			while(readln(pd[0], output, 1024)>0){
 				setComandoOutput(n, output, i, j++); //coloca a linha lida no array output 
+				//printf("POSIÇÃO: %d\n", cmdpos);
+				//printf("TAMANHO DA STRING DOS OUTPUTS: %d\n", size(n->arrayCmd[cmdPos]->output));
+			}
 
 			setComandoOutput(n, (char *)NULL, i, j);//colocamos a ultima posição deste array a NULL
 			close(pd[0]); //... pois já nao precisamos dele

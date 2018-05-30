@@ -1,0 +1,49 @@
+Este comando lista os ficheiros:
+$ ls
+Este comando exibe a primeira linha do output do anterior:
+$| head -1 
+Faz o ps:
+$ ps
+Faz o ps com argumentos:
+$ ps -a
+Mostra a data:
+$ date 
+Este comando exibe a primeira linha do output do anterior:
+$| head -1 
+Este comando mostra o calendario:
+$ cal
+Este comando exibe a primeira linha do output do anterior:
+$| head -1 
+Este comando exibe informações sobre um utilizador:
+$ id
+Este comando exibe a primeira linha do output do anterior:
+$| head -1 
+Este comando exibe todas a informações referentes à entrada e saída de utilizadores no sistema:
+$ last
+Este comando exibe o primeiro output do anterior:
+$| head -1
+Este comando lista os módulos do kernel que estão guardados na memória:
+$ lsmod 
+Este comando exibe até à segunda linha o output em causa:
+$| head -2
+Este comando exibe até à terceira linha o output em causa:
+$2| head -3
+Este comando exibe até à quarta linha o output em causa:
+$3| head -4
+Este comando exibe até à quinta linha o output em causa:
+$4| head -5
+Este comando exibe até à sexta linha o output em causa:
+$5| head -6
+Este comando exibe até à sétima linha o output em causa:
+$6| head -7
+Este comando exibe até à oitava linha o output em causa:
+$7| head -8
+Este comando exibe até à nona linha o output em causa:
+$8| head -9
+Este comando exibe até à décima linha o output em causa:
+$9| head -10
+Exibe a lista das variáveis ambiente:
+$ set
+
+
+

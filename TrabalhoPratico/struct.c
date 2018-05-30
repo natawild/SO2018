@@ -31,6 +31,7 @@ Comando initComando(){
     	(c->args)[i] = (char*) malloc( 512 * sizeof(char));
 	}
 	c -> output = (char **) malloc(512 * sizeof(char*));
+	
 	for (i=0; i<512; i++){
     	(c->output)[i] = (char*) malloc( 512 * sizeof(char));
 	}
@@ -60,7 +61,7 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
-	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $|"));//se o nome tiver uma dependencia a posição 0 terá o comando, se tiver mais que uma a posicao 0 terá o nr de dependencias 
+	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $"));//se o nome tiver uma dependencia a posição 0 terá o comando, se tiver mais que uma a posicao 0 terá o nr de dependencias 
 	while( (aux = strtok(NULL," $|")) != NULL)
 		strcpy(n->arrayCmd[n->used]->args[i++], aux);
 	n->arrayCmd[n->used]->args[i] = NULL;   	
@@ -165,8 +166,10 @@ void setComandoArgs(Notebook n, char *args, int cmdPos, int argsNr){
 void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
 	if(output==NULL) 
 		n->arrayCmd[cmdPos]->output[outputNr]=NULL;
-	else 
+	else{
 		strcpy(n->arrayCmd[cmdPos]->output[outputNr], output);
+		//printf("OUTPUTS %d: %s\n", outputNr, n->arrayCmd[cmdPos]->output[outputNr]);
+	}
 	
 }
 
