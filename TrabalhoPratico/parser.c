@@ -92,7 +92,7 @@ Notebook parser(Notebook n, char *argv){
 			_exit(-1);
 		}	
 
-		if(containsPipes(nome) == 0){
+		if(containsPipes(nome) == 0){//Se não existem | no input entre argumentos
 
 			insereNotebook(n, descricao, nome, depends); //insere no notebook n, o nome, a descricao lidos e a dependencia
 			pipe(pd); //criamos um pipe para passar informacao do pai para o filho
