@@ -40,7 +40,7 @@ int seeDepends(char *nome){
 }
 
 Notebook parser(Notebook n, char *argv){
-	int fnb; //descritor do ficheiro notebook
+	int fnb, fe; //descritor do ficheiro notebook.nb e do erros.nb
 	int i=0, j=0; //variável de iteração do while
 	int r; //número de bytes lidos pelo readln 
 	int x, y; // retorno do fork
@@ -51,7 +51,19 @@ Notebook parser(Notebook n, char *argv){
 	char output[1024]; //string do output
 	int depends; 
 
+	fe = open("erros.nb", O_CREAT | O_RDWR | O_TRUNC, 0666);
+	if(fe<0){
+		perror("O ficheiro erros.nb não foi aberto.\n");
+		_exit(0);
+	}
+	dup2(fe,2);
+	close(fe);
+
 	fnb = open(argv, O_RDONLY | O_RDWR);
+	if(fnb<0){
+		perror("O ficheiro notebook.nb ou erros.nb não foi aberto.\n");
+		_exit(0);
+	}
 
 	// a cada iteração são lidos o nome e a descrição de um comando
 	while(readln(fnb, descricao, 1024)>0 && 
@@ -75,21 +87,21 @@ Notebook parser(Notebook n, char *argv){
 		}
 
 		if(0==isEmpty(nome)){
-			printf("O ficheiro notebook.nb não corresponde ao formato pedido.\n");
-			_exit(-1);
+			perror("O ficheiro notebook.nb não corresponde ao formato pedido.\n");
+			_exit(0);
 		}
 
 		//se notebook.nb não estiver direito
 		if(descricao[0]=='$' || nome[0]!='$'){
-			printf("O ficheiro notebook.nb não corresponde ao formato pedido.\n");
-			_exit(-1); //void * para não dar warning de passar de intp para apontador
+			perror("O ficheiro notebook.nb não corresponde ao formato pedido.\n");
+			_exit(0); //void * para não dar warning de passar de intp para apontador
 		}
 
 		depends = seeDepends(&nome[1]);
 
 		if(depends>i){
-			printf("O comando <%s> depende de outro que é inexistente.\n", nome);
-			_exit(-1);
+			perror("Um comando depende de outro que é inexistente.\n");
+			_exit(0);
 		}	
 
 		if(containsPipes(nome) == 0){ //Se não existem | no input entre argumentos
@@ -104,9 +116,9 @@ Notebook parser(Notebook n, char *argv){
 
 				if(depends==0){
 					execvp(getComandoArgs(n, i)[0], &getComandoArgs(n, i)[0]);
-					write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
+					perror("Um comando não pode ser executado.\n");//caso o exec não tenha sido feito
 					kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
-					_exit(-1);
+					_exit(0);
 				}
 			
 				if(depends!=0){
@@ -120,7 +132,7 @@ Notebook parser(Notebook n, char *argv){
 						}
 						write(pda[1], getComandoOutput(n, (i-depends))[j], 1024);
 						close(pda[1]);
-						_exit(-1);
+						_exit(0);
 					}
 
 					wait(NULL);
@@ -128,23 +140,15 @@ Notebook parser(Notebook n, char *argv){
 					char buf[1024];
 					int r;
 					dup2(pda[0], 0);
-					close(pda[0]);
-
-					/*if(depends==1){
-						execvp(getComandoArgs(n, i)[0], &getComandoArgs(n, i)[0]);
-						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
-						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
-						_exit(-1);
-					}*/
 					
-						execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
-						write(2, "Um comando não pode ser executado.\n", 36);//caso o exec não tenha sido feito
-						kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
-						_exit(-1);
+					execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
+					perror("Um comando não pode ser executado.\n");//caso o exec não tenha sido feito
+					kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
+					_exit(0);
 					
 				}
 
-				_exit(-1);
+				_exit(0);
 			}
 
 			close(pd[1]); // ... pois o pai só irá ler do pipe
