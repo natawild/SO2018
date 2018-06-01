@@ -39,7 +39,12 @@ int seeDepends(char *nome){
 		return depends;
 }
 
+void sig_handler(){
+	_exit(0);
+}
+
 Notebook parser(Notebook n, char *argv){
+	signal(SIGINT, sig_handler);
 	int fnb, fe; //descritor do ficheiro notebook.nb e do erros.nb
 	int i=0, j=0; //variável de iteração do while
 	int r; //número de bytes lidos pelo readln 

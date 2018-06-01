@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I.
+CFLAGS=-I. -g
 DEPS = parser.h struct.h readl.h 
 OBJ = main.o parser.o struct.o readl.o
 
@@ -7,7 +7,7 @@ OBJ = main.o parser.o struct.o readl.o
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 processanb: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS)
+	gcc -g -o $@ $^ $(CFLAGS)
 
 clean: 
 	$(RM) count *.o *~

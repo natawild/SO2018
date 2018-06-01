@@ -115,7 +115,7 @@ char *getComandoNome(Notebook n, int cmdPos){
 }
 
 char **getComandoArgs(Notebook n, int cmdPos){
- 	char **args = malloc(512 * sizeof(char));
+ 	char **args = malloc(512 * sizeof(char*));
  	int j;
  	for (j=0; j<512; j++){
     	args[j] = (char*) malloc( 512 * sizeof(char));
@@ -130,8 +130,8 @@ char **getComandoArgs(Notebook n, int cmdPos){
 }
 
 char **getComandoOutput(Notebook n, int cmdPos){
- 	char **output = malloc(512 * sizeof(char));
  	int j;
+ 	char **output = malloc(512 * sizeof(char*));
  	for (j=0; j<512; j++){
     	output[j] = (char*) malloc( 512 * sizeof(char));
 	} 
