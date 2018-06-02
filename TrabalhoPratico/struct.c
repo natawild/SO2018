@@ -4,11 +4,14 @@
 #include <unistd.h>
 #include "struct.h"
 
+#define LEN 512
+
 
 struct comando{
    char  *descricao; //linha do notebook com a descrição do comando
    char  *nome; //linha do notebook que tem o nome do comando
    char **args; //array de strings, onde cada uma é um argumento do comando
+   int otSize;
    char **output; //array de strings, onde cada uma é um output do comando
    int depends; //depends é o nº de comando do qual deve retirar o output, contado desde o comando atual para trás
 }; 
@@ -24,16 +27,16 @@ struct notebook{
 Comando initComando(){
 	int i;
 	Comando c = malloc(sizeof(struct comando));
-	c -> descricao = (char *) malloc(512 * sizeof(char));
-	c -> nome = (char *) malloc(512 * sizeof(char));
-	c -> args = (char **) malloc(512 * sizeof(char*));
-	for (i=0; i<512; i++){
-    	(c->args)[i] = (char*) malloc( 512 * sizeof(char));
+	c -> descricao = (char *) malloc(LEN * sizeof(char));
+	c -> nome = (char *) malloc(LEN * sizeof(char));
+	c -> args = (char **) malloc(LEN * sizeof(char*));
+	for (i=0; i<LEN; i++){
+    	(c->args)[i] = (char*) malloc( LEN * sizeof(char));
 	}
-	c -> output = (char **) malloc(512 * sizeof(char*));
-	
-	for (i=0; i<512; i++){
-    	(c->output)[i] = (char*) malloc( 512 * sizeof(char));
+	c->otSize = LEN;
+	c -> output = (char **) malloc(LEN * sizeof(char*));
+	for (i=0; i<LEN; i++){
+    	(c->output)[i] = (char*) malloc( LEN * sizeof(char));
 	}
 	c -> depends = 0;
 	return c;
@@ -56,9 +59,7 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 	}
 
 	Comando cmd = initComando();
-	
 	n->arrayCmd[n->used] = cmd;
-
 	strcpy(n->arrayCmd[n->used]->descricao, descricao);
 	strcpy(n->arrayCmd[n->used]->nome, nome);
 	strcpy(n->arrayCmd[n->used]->args[i++], strtok(nome," $"));//se o nome tiver uma dependencia a posição 0 terá o comando, se tiver mais que uma a posicao 0 terá o nr de dependencias 
@@ -67,7 +68,7 @@ int insereNotebook(Notebook n, char *descricao, char *nome, int depends){
 	n->arrayCmd[n->used]->args[i] = NULL;   	
 	n->arrayCmd[n->used]->depends = depends;
 	(n->used)++;
-	return 0;	
+	return 0;		
 }
 
 int printNotebook(Notebook n){
@@ -81,6 +82,7 @@ int printNotebook(Notebook n){
 		for(j=0; (n->arrayCmd[i]->args[j])!=NULL; j++)
 			printf("[%d] %s -- ", j, n->arrayCmd[i]->args[j]);
 		printf("\n");
+		printf("Size outputs: %d\n", n->arrayCmd[i]->otSize);
 		printf("outputs:  ");
 		for(j=0; n->arrayCmd[i]->output[j]!=NULL; j++)
 			printf("[%d] %s -- ", j, n->arrayCmd[i]->output[j]);
@@ -103,22 +105,22 @@ int getNotebookUsed(Notebook n){
 }
 
 char *getComandoDescricao(Notebook n, int cmdPos){
- 	char * descricao = malloc(512 * sizeof(char));
+ 	char * descricao = malloc(LEN * sizeof(char));
  	strcpy(descricao, n->arrayCmd[cmdPos]->descricao);
 	return descricao;
 }
 
 char *getComandoNome(Notebook n, int cmdPos){
- 	char * nome = malloc(512 * sizeof(char));; 
+ 	char * nome = malloc(LEN * sizeof(char));; 
  	strcpy(nome, n->arrayCmd[cmdPos]->nome);
 	return nome;
 }
 
 char **getComandoArgs(Notebook n, int cmdPos){
- 	char **args = malloc(512 * sizeof(char*));
- 	int j;
- 	for (j=0; j<512; j++){
-    	args[j] = (char*) malloc( 512 * sizeof(char));
+	int j;
+ 	char **args = malloc(LEN * sizeof(char*));
+ 	for (j=0; j<LEN; j++){
+    	args[j] = (char*) malloc( LEN * sizeof(char));
 	} 
  	for(j=0; (n->arrayCmd[cmdPos]->args[j])!=NULL; j++){
  		strcpy(args[j], n->arrayCmd[cmdPos]->args[j]);
@@ -131,9 +133,9 @@ char **getComandoArgs(Notebook n, int cmdPos){
 
 char **getComandoOutput(Notebook n, int cmdPos){
  	int j;
- 	char **output = malloc(512 * sizeof(char*));
- 	for (j=0; j<512; j++){
-    	output[j] = (char*) malloc( 512 * sizeof(char));
+ 	char **output = malloc(LEN * sizeof(char*));
+ 	for (j=0; j<LEN; j++){
+    	output[j] = (char*) malloc( LEN * sizeof(char));
 	} 
  	for(j=0; (n->arrayCmd[cmdPos]->output[j])!=NULL; j++)
  		strcpy(output[j], n->arrayCmd[cmdPos]->output[j]);
@@ -164,11 +166,26 @@ void setComandoArgs(Notebook n, char *args, int cmdPos, int argsNr){
 }
 
 void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
+
+	/*
+	if (outputNr == n->arrayCmd[cmdPos]->otSize){
+		
+		n->arrayCmd[cmdPos]->output = realloc(n->arrayCmd[cmdPos]->output, 2*(n->arrayCmd[cmdPos]->otSize)*sizeof(*(n->arrayCmd[cmdPos]->output)));
+		
+		for(int i=(n->arrayCmd[cmdPos]->otSize); i<((n->arrayCmd[cmdPos]->otSize)*2); i++)
+			n->arrayCmd[cmdPos]->output[i] = (char*) malloc( LEN * sizeof(char));
+		
+		n->arrayCmd[cmdPos]->otSize = (n->arrayCmd[cmdPos]->otSize)*2;
+	}*/
+
+	if (n->used == n->size){
+		n->arrayCmd = realloc(n->arrayCmd, 2*(n->size)*sizeof(struct comando));
+		n->size =(n->size)*2;
+	}
 	if(output==NULL) 
 		n->arrayCmd[cmdPos]->output[outputNr]=NULL;
 	else{
 		strcpy(n->arrayCmd[cmdPos]->output[outputNr], output);
-		//printf("OUTPUTS %d: %s\n", outputNr, n->arrayCmd[cmdPos]->output[outputNr]);
 	}
 	
 }

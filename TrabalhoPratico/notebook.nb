@@ -1,42 +1,36 @@
 Este comando lista os ficheiros:
-$ ls -lR /
+$ lsmod
 >>>
-/:
-total 296
-drwxr-xr-x   2 root root   4096 mai 28 10:32 bin
-drwxr-xr-x   4 root root   4096 mai 24 09:23 boot
-drwxrwxr-x   2 root root   4096 mai  1 01:07 cdrom
-drwxr-xr-x  20 root root   4540 jun  1 14:57 dev
-drwxr-xr-x 131 root root  12288 mai 28 10:32 etc
-drwxr-xr-x   3 root root   4096 mai  1 01:08 home
-lrwxrwxrwx   1 root root     33 mai 24 09:22 initrd.img -> boot/initrd.img-4.15.0-22-generic
-lrwxrwxrwx   1 root root     33 mai  1 01:06 initrd.img.old -> boot/initrd.img-4.15.0-20-generic
-drwxr-xr-x  21 root root   4096 mai  1 01:13 lib
-drwxr-xr-x   2 root root   4096 abr 26 19:18 lib64
-drwx------   2 root root  16384 mai  1 01:05 lost+found
-drwxr-xr-x   3 root root   4096 mai  1 01:41 media
-drwxr-xr-x   2 root root   4096 abr 26 19:18 mnt
-drwxr-xr-x   4 root root   4096 mai  8 20:58 opt
-dr-xr-xr-x 283 root root      0 mai 30 18:47 proc
-drwx------   6 root root   4096 mai  8 22:26 root
-drwxr-xr-x  28 root root    860 jun  1 15:02 run
-drwxr-xr-x   2 root root  12288 mai 28 10:32 sbin
-drwxr-xr-x  11 root root   4096 mai  8 23:11 snap
-drwxr-xr-x   2 root root   4096 abr 26 19:18 srv
-dr-xr-xr-x  13 root root      0 mai 30 18:53 sys
-drwxrwxrwt  16 root root 200704 jun  1 15:08 tmp
-drwxr-xr-x  10 root root   4096 abr 26 19:18 usr
-drwxr-xr-x  14 root root   4096 abr 26 19:30 var
-lrwxrwxrwx   1 root root     30 mai 24 09:22 vmlinuz -> boot/vmlinuz-4.15.0-22-generic
-lrwxrwxrwx   1 root root     30 mai 24 09:22 vmlinuz.old -> boot/vmlinuz-4.15.0-20-generic
 <<<
-Agora podemos ordenar estes ficheiros:
-$ date
+lalalalalal
+$| ls -l
 >>>
-sex jun  1 15:08:19 WEST 2018
+total 2368
+-rw------- 1 rrpereira rrpereira 2277376 jun  1 12:44 core
+-rw-r--r-- 1 rrpereira rrpereira      64 jun  2 16:43 erros.nb
+-rw-r--r-- 1 rrpereira rrpereira    1017 jun  1 16:00 main.c
+-rw-r--r-- 1 rrpereira rrpereira    7880 jun  1 23:00 main.o
+-rw-r--r-- 1 rrpereira rrpereira     217 jun  1 12:44 Makefile
+-rw-r--r-- 1 rrpereira rrpereira     143 jun  2 16:42 notebook.nb
+-rw-r--r-- 1 rrpereira rrpereira    5318 jun  2 16:43 parser.c
+-rw-r--r-- 1 rrpereira rrpereira     175 mai 31 11:49 parser.h
+-rw-r--r-- 1 rrpereira rrpereira   13560 jun  2 16:43 parser.o
+-rwxr-xr-x 1 rrpereira rrpereira   28944 jun  2 16:43 processanb
+-rwxr-xr-x 1 rrpereira rrpereira    8456 mai 31 11:49 readl
+-rw-r--r-- 1 rrpereira rrpereira    1011 jun  1 16:00 readl.c
+-rw-r--r-- 1 rrpereira rrpereira     158 mai 31 11:49 readl.h
+-rw-r--r-- 1 rrpereira rrpereira    6648 jun  1 23:01 readl.o
+drwxrwxr-x 3 rrpereira rrpereira    4096 mai 21 01:10 Relatorio
+-rw-r--r-- 1 rrpereira rrpereira    5438 jun  2 13:01 struct.c
+-rw-r--r-- 1 rrpereira rrpereira     802 mai 31 11:49 struct.h
+-rw-r--r-- 1 rrpereira rrpereira   15688 jun  2 13:02 struct.o
 <<<
-E escolher o primeiro:
-$2| head -1
+lalalalalal
+$| head -1
 >>>
-/:
+total 2368
+<<<
+lalalalalal
+$3| head -1
+>>>
 <<<
