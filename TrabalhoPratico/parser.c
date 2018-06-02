@@ -140,8 +140,8 @@ Notebook parser(Notebook n, char *argv){
 					if(y==0){
 						close(pda[0]);
 						for(j=0; (getComandoOutput(n,(i-depends))[j])!=NULL; j++){
-							write(pd[1], getComandoOutput(n, (i-depends))[j], strlen(getComandoOutput(n, (i-depends))[j]));
-							write(pd[1], "\n", 1);
+							write(pda[1], getComandoOutput(n, (i-depends))[j], strlen(getComandoOutput(n, (i-depends))[j]));
+							write(pda[1], "\n", 1);
 						}
 						write(pda[1], getComandoOutput(n, (i-depends))[j], 1024);
 						close(pda[1]);
