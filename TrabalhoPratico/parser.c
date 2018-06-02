@@ -40,12 +40,16 @@ int seeDepends(char *nome){
 		return depends;
 }
 
-void sig_handler(){
+void sig_handlerPai(){
+	//_exit(1);
+}
+
+void sig_handlerFilho(){
 	_exit(1);
 }
 
 Notebook parser(Notebook n, char *argv){
-	signal(SIGINT, sig_handler);
+	signal(SIGINT, sig_handlerPai);
 	int fnb, fe; //descritor do ficheiro notebook.nb e do erros.nb
 	int i=0, j=0; //variável de iteração do while
 	int r; //número de bytes lidos pelo readln 
@@ -118,6 +122,7 @@ Notebook parser(Notebook n, char *argv){
 			pipe(pd); //criamos um pipe para passar informacao do pai para o filho
 			x = fork(); //criamos um filho para executar o exec
 			if(x==0){
+				signal(SIGINT, sig_handlerFilho);
 				close(pd[0]); //.. pois o filho só irá escrever no pipe
 				dup2(pd[1], 1); //o stdout passa a ser o pipe  
 				close(pd[1]); //o stdout já foi redirecionado para o stdout, tornando-se desnecessário
@@ -143,7 +148,6 @@ Notebook parser(Notebook n, char *argv){
 						_exit(1);
 					}
 
-					wait(NULL);
 					close(pda[1]);
 					char buf[1024];
 					int r;
@@ -152,6 +156,7 @@ Notebook parser(Notebook n, char *argv){
 					execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
 					perror("Um comando não pode ser executado.\n");//caso o exec não tenha sido feito
 					//kill(getppid(), SIGKILL);//envia um sinal para matar o processo pai e abortar a alteração do notebook
+					wait(NULL);
 					_exit(1);
 					
 				}
@@ -175,7 +180,10 @@ Notebook parser(Notebook n, char *argv){
 			//if(1==WEXITSTATUS(z))
 			//	_exit(1); //o processo pai para se houver algum erro nos execs
 
-		}		
+		}
+		//else{
+
+		//}		
 
 		i++;
 	}

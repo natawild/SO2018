@@ -117,32 +117,11 @@ char *getComandoNome(Notebook n, int cmdPos){
 }
 
 char **getComandoArgs(Notebook n, int cmdPos){
-	int j;
- 	char **args = malloc(LEN * sizeof(char*));
- 	for (j=0; j<LEN; j++){
-    	args[j] = (char*) malloc( LEN * sizeof(char));
-	} 
- 	for(j=0; (n->arrayCmd[cmdPos]->args[j])!=NULL; j++){
- 		strcpy(args[j], n->arrayCmd[cmdPos]->args[j]);
- 	}
-
- 	args[j]=NULL;
- 	
-	return args;
+	return n->arrayCmd[cmdPos]->args;
 }
 
 char **getComandoOutput(Notebook n, int cmdPos){
- 	int j;
- 	char **output = malloc(LEN * sizeof(char*));
- 	for (j=0; j<LEN; j++){
-    	output[j] = (char*) malloc( LEN * sizeof(char));
-	} 
- 	for(j=0; (n->arrayCmd[cmdPos]->output[j])!=NULL; j++)
- 		strcpy(output[j], n->arrayCmd[cmdPos]->output[j]);
- 	
- 	output[j]=NULL;
- 	
-	return output;
+ 	return n->arrayCmd[cmdPos]->output;
 }
 
 int getComandoDepends(Notebook n, int cmdPos){
@@ -167,7 +146,7 @@ void setComandoArgs(Notebook n, char *args, int cmdPos, int argsNr){
 
 void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
 
-	/*
+	///*
 	if (outputNr == n->arrayCmd[cmdPos]->otSize){
 		
 		n->arrayCmd[cmdPos]->output = realloc(n->arrayCmd[cmdPos]->output, 2*(n->arrayCmd[cmdPos]->otSize)*sizeof(*(n->arrayCmd[cmdPos]->output)));
@@ -176,7 +155,7 @@ void setComandoOutput(Notebook n, char *output, int cmdPos, int outputNr){
 			n->arrayCmd[cmdPos]->output[i] = (char*) malloc( LEN * sizeof(char));
 		
 		n->arrayCmd[cmdPos]->otSize = (n->arrayCmd[cmdPos]->otSize)*2;
-	}*/
+	}//*/
 
 	if (n->used == n->size){
 		n->arrayCmd = realloc(n->arrayCmd, 2*(n->size)*sizeof(struct comando));

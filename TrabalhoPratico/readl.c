@@ -21,6 +21,11 @@ ssize_t readln(int fildes, void *buf, size_t nbyte) {
 		}
 	}
 
+	if(c=='\n' && i==0){
+		((char*) buf)[i] = c;
+		i++;
+	}
+
 	// Adição de EOF == 0 com verificação no caso de chegar ao limite de leitura (N);
 	if(i < nbyte)
 		((char*) buf)[i] = 0;
@@ -33,6 +38,7 @@ ssize_t readln(int fildes, void *buf, size_t nbyte) {
 	// se deu erro na leitura retorna esse mesmo erro
 	if(n < 0)
 		return n;
+
 	// no caso de apanhar a linha só com o '\n'
 	if((n == 0) && (i == 0))
 		return (-1);

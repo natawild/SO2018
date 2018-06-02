@@ -10,4 +10,4 @@ processanb: $(OBJ)
 	gcc -g -o $@ $^ $(CFLAGS)
 
 clean: 
-	$(RM) count *.o *~
+	rm erros.nb core main.o parser.o readl.o struct.o processanb
