@@ -149,8 +149,6 @@ Notebook parser(Notebook n, char *argv){
 					}
 
 					close(pda[1]);
-					char buf[1024];
-					int r;
 					dup2(pda[0], 0);
 					
 					execvp(getComandoArgs(n, i)[1], &getComandoArgs(n, i)[1]);
