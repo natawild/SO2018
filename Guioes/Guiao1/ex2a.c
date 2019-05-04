@@ -9,12 +9,10 @@ int main()
 
 	int f, n; 
 	char buf; 
-	//vou ler um caracter de cada vez 
-	while( (n = read(0, &buf, 1)) > 0){ 
+
+	while( (n = read(0,&buf,1)) > 0){ 
 		write(1, &buf, 1); 
 	}
-
-	exit(n); 
 
 	
 }

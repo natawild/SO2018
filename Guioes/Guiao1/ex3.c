@@ -4,15 +4,17 @@
 #include <stdio.h> 
 
 
-int main()
-{
+int main(int argc, char * argv[]){
 
 	int f, n; 
-	char buf; 
-
-	while( (n = read(0,&buf,1)) > 0){ 
-		write(1, &buf, 1); 
+	int buffSize=atoi(argv[1]); 
+	char buf[buffSize]; 
+	//vou ler o numero de caracteres que forem passados como argumento  
+	while( (n = read(0, &buf, buffSize)) > 0){ 
+		write(1, &buf, n); 
 	}
+
+	exit(n); 
 
 	
 }
