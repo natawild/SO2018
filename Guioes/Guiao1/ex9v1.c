@@ -46,7 +46,6 @@ int main(int argc, char * argv[]){
 		imprimeConteudo(argv[i]); 
 	}
 
-
 	exit(1); 
 }
 
