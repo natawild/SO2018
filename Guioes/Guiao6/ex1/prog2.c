@@ -18,6 +18,7 @@ int main(int argc, char const *argv[]){
 	while((n=read(0,linha,sizeof(linha+1)))>0){ //enquanto leio caracteres 
 
 			write(ficheiro,linha,n); //escrevo 
+			fflush(stdout);
      }
      close(ficheiro); 
 

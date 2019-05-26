@@ -17,6 +17,7 @@ int main(int argc, char const *argv[]){
 
    while(n=read(ficheiro,l,sizeof(l+1))){
         write(1,l,n);
+        fflush(stdout);
    }
    close(ficheiro); 
 
